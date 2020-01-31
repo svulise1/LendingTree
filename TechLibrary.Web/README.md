@@ -10,11 +10,12 @@ Visual Studio 2019 (.net core framework 3.x) - [Community Edition Download](http
 
 ### Solution Setup Instructions 
 1. Clone the github repository locally 
-2. Right Click the project “TechLibrary.Web”, select “Open Command Prompt Here” 
-3. `$ npm install`   *(install the vue js client npm packages)* 
-4. `$ npm run serve` *(run the client on localhost)*
-5. **F5** in Visual Studio to launch the API project in Debug mode 
-6. Select “Yes” to the dialog prompt to “trust the ASP.NET Core SSL certificate” 
+2. Open **TechLibrary.sln**
+3. Right Click the project “TechLibrary.Web”, select “Open Command Prompt Here” 
+4. `$ npm install`   *(install the vue js client npm packages)* 
+5. `$ npm run serve` *(run the client on localhost)*
+6. **F5** in Visual Studio to launch the API project in Debug mode 
+7. Select “Yes” to the dialog prompt to “trust the ASP.NET Core SSL certificate” 
 
 
 ### Coding Exercise Tasks 
