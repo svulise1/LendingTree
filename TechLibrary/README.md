@@ -30,7 +30,7 @@ Create a search box control to filter/search the data store fields title and des
 #### Task: Edit Book 
 On the book detail page, introduce a toggle into the client UI to toggle from read-only mode to edit mode.  Provide functionality in the API to support book detail edits/updates. 
 
-#### Task: Add New Book 
+#### Bonus Task: Add New Book 
 Create functionality in the client UI to add a new book to the data store and update the API to save a new book detail item. 
 
 ### Considerations
@@ -38,3 +38,5 @@ This development exercise is intended to be a ~ 4-hour exercise (+/-).  Even tho
 
 
 Agile teams strive for maintainable, quality code that will be evaluated at build time in a Continuous Integration pipeline – please apply all applicable techniques and practices to this project towards these goals. 
+
+If you find areas that you would choose to refactor, please do so and note your thought process behind the refactoring.
