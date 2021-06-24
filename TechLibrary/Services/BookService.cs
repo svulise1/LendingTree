@@ -44,7 +44,7 @@ namespace TechLibrary.Services
                 return await GetBooksAsync();
             }
 
-            List<Book> filterBooks = await _dataContext.Books.AsQueryable().Where(m =>
+            List<Book> filterBooks = await _dataContext.Books.Where(m =>
                     m.ShortDescr.ToLower().Contains(filterContent.ToLower()) ||
                     m.Title.ToLower().Contains(filterContent.ToLower()))
                 .ToListAsync();
@@ -76,7 +76,7 @@ namespace TechLibrary.Services
         {
             if (IsNullOrEmpty(isbn))
                 throw new ArgumentNullException(nameof(isbn));
-            return await _dataContext.Books.FirstOrDefaultAsync(x =>
+            return await _dataContext.Books.SingleOrDefaultAsync(x =>
                 string.Equals(x.ISBN.ToLower(), isbn.ToLower()));
         }
 
