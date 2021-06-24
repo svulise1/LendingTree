@@ -1,5 +1,5 @@
 ﻿using AutoMapper;
-using TechLibrary.Domain;
+using TechLibrary.Data.Entities;
 using TechLibrary.Models;
 
 namespace TechLibrary.MappingProfiles

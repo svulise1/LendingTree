@@ -13,5 +13,6 @@ namespace TechLibrary.Models
         public string PublishedDate { get; set; }
         public string ThumbnailUrl { get; set; }
         public string Descr { get; set; }
+        
     }
 }

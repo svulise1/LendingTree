@@ -1,5 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using TechLibrary.Domain;
+using TechLibrary.Data.Entities;
 
 namespace TechLibrary.Data
 {
@@ -11,5 +11,7 @@ namespace TechLibrary.Data
         }
 
         public DbSet<Book> Books { get; set; }
+
+        public DbSet<ErrorStore> ErrorStore { get; set; }
     }
 }

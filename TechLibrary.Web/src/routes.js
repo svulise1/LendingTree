@@ -8,7 +8,7 @@ const Book = () => import(/* webpackChunkName: "Book" */ './components/Book.vue'
 
 const router = new VueRouter({
   routes: [
-    { path: '/', component: Home },
+    { name:'home', path: '/', component: Home },
     {
       name: 'book_view',
       path: '/book/:id',
