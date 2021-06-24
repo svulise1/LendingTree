@@ -22,6 +22,11 @@ Completed all the tasks in readme  <br>
 
 Added Toast Notifications  <br>
 
+
+Things I can Add- Adding Cache so we can limit the calls to API
+                 -Adding Middleware to collect excpetion when code breaks in API
+                 
+
 Thanks a lot for giving me this opportunity.
 VUE seems a little tricky but I liked.
 I hope you like my work. 
