@@ -70,7 +70,7 @@ import axios from "axios";
 
 export default {
   name: "Book",
-  props: ["id"],
+  props: ["id", "page"],
   data: () => ({
     book: null,
     editMode: false,
@@ -136,6 +136,7 @@ export default {
         this.book.title = this.booktitle;
         this.book.descr = this.bookDesc;
         this.book.publishedDate = this.publishedDate;
+        this.book.pageNum = this.page;
               axios.put("https://localhost:5001/api/books", this.book)
                     .then(response => {
                         if(response.data){

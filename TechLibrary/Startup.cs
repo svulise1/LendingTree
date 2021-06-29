@@ -25,8 +25,6 @@ namespace TechLibrary
             services.AddDbContext<DataContext>(options => options.UseSqlite("Data Source=techLibrary.db"));
 
             services.AddScoped<IBookService, BookService>();
-            services.AddScoped<IBookGridService, BookGridService>();
-
             services.AddScoped<IErrorStoreService, ErrorStoreService>();
 
             services.AddCors(options =>
@@ -39,7 +37,7 @@ namespace TechLibrary
             });
 
             services.AddControllers();
-
+            services.AddMemoryCache();
             services.AddAutoMapper(typeof(Startup));
         }
 

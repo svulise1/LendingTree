@@ -11,7 +11,7 @@ const router = new VueRouter({
     { name:'home', path: '/', component: Home },
     {
       name: 'book_view',
-      path: '/book/:id',
+      path: '/book/:id/:page',
       component: Book,
       props: true
     }

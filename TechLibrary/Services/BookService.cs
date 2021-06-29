@@ -19,9 +19,12 @@ namespace TechLibrary.Services
 
         Task<bool> UpdateBook(BookResponse updatedBook);
 
-        Task<List<Book>> GetFilteredBooks(string filterContent);
-
+        Task<Tuple<int, List<Book>>> GetFilteredBooks(string filterContent, GridRequest gridRequest);
         Task<NewBookResponse> AddBook(BookResponse bookResponse);
+        Task<int> GetBookCount();
+
+        Task<List<Book>> GetBooksGridRequest(GridRequest gridRequest);
+
     }
 
     public class BookService : IBookService
@@ -37,19 +40,38 @@ namespace TechLibrary.Services
         /// return books based on filtered content, we check filtered content on title and short desc
         /// </summary>
         /// <returns></returns>
-        public async Task<List<Book>> GetFilteredBooks(string filterContent)
+        public async Task<Tuple<int, List<Book>>> GetFilteredBooks(string filterContent, GridRequest gridRequest)
         {
-            if (IsNullOrEmpty(filterContent))
+            if (IsNullOrEmpty(filterContent) || gridRequest is null)
             {
-                return await GetBooksAsync();
+                throw  new ArgumentNullException(nameof(gridRequest), nameof(filterContent));
             }
 
+            //  decrement the page index by 1, so it comes zero index.
+            // Imagine if you are one page 1, without decrementing it will always skip the first 10 values
+
+            int selectedPage = gridRequest.CurrentPage;
+            selectedPage -= 1;
             List<Book> filterBooks = await _dataContext.Books.Where(m =>
                     m.ShortDescr.ToLower().Contains(filterContent.ToLower()) ||
                     m.Title.ToLower().Contains(filterContent.ToLower()))
                 .ToListAsync();
 
-            return filterBooks;
+            if (filterBooks.Count == 0)
+            {
+                return  new Tuple<int, List<Book>>(0,filterBooks);
+            }
+
+            List<Book> filteredBookGrid = filterBooks.Skip(gridRequest.PerPage * selectedPage)
+                .Take(gridRequest.PerPage).ToList();
+
+            filteredBookGrid = SortBooks(filteredBookGrid, gridRequest);
+            return  new Tuple<int, List<Book>>(filterBooks.Count, filteredBookGrid);
+        }
+
+        public async Task<int> GetBookCount()
+        {
+          return  await _dataContext.Books.CountAsync();
         }
 
         public async Task<List<Book>> GetBooksAsync()
@@ -57,6 +79,40 @@ namespace TechLibrary.Services
             IQueryable<Book> queryable = _dataContext.Books.AsQueryable();
 
             return await queryable.ToListAsync();
+        }
+
+
+        public async Task<List<Book>> GetBooksGridRequest(GridRequest gridRequest)
+        { 
+            List<Book> selectedBooks;
+
+            if (gridRequest.CurrentPage == 1)
+            {
+              selectedBooks =  await _dataContext.Books.Take(gridRequest.PerPage).ToListAsync();
+            }
+            else
+            {
+                int selectedPage = gridRequest.CurrentPage - 1;
+                int offset = (selectedPage * gridRequest.PerPage) + 1; 
+                selectedBooks = await _dataContext.Books.Where(m => m.BookId >= offset).Take(gridRequest.PerPage)
+                    .ToListAsync();
+            }
+            
+            if(selectedBooks is null || selectedBooks.Count <= 0)
+                return  new List<Book>();
+
+            return SortBooks(selectedBooks, gridRequest);
+        }
+
+        public  List<Book> SortBooks (List<Book> selectedBooks, GridRequest gridRequest)
+        {
+            if (selectedBooks != null && selectedBooks.Count > 0)
+            {
+                selectedBooks = gridRequest.SortDesc
+                    ? selectedBooks.OrderByDescending(m => m.ISBN).ToList()
+                    : selectedBooks.OrderBy(m => m.ISBN).ToList();
+            }
+            return selectedBooks;
         }
 
         /// <summary>

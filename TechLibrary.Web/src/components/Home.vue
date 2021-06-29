@@ -29,7 +29,7 @@
                 <b-img :src="data.value" thumbnail fluid></b-img>
             </template>
             <template v-slot:cell(title_link)="data">
-                <b-link :to="{ name: 'book_view', params: { 'id' : data.item.bookId } }">{{ data.item.title }}</b-link>
+                <b-link :to="{ name: 'book_view', params: { 'id' : data.item.bookId, 'page': currentPage} }">{{ data.item.title }}</b-link>
             </template>
         </b-table>
     </div>
